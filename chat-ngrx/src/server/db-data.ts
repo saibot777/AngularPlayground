@@ -1,6 +1,6 @@
 import { Message } from '../shared/models/message.model';
 import { Participant } from '../shared/models/participant.model';
-import { Thread } from '../shared/thread.model';
+import { Thread } from '../shared/models/thread.model';
 
 export const dbParticipants: {[key: number]: Participant} = {
     1: {
