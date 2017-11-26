@@ -1,7 +1,7 @@
 export interface Message {
-    id: number | string;
-    threadId: number;
-    participantId: number;
+    id: any;
+    threadId: any;
+    participantId: any;
     text: string;
     timestamp: number;
 }

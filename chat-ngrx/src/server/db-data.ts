@@ -1,27 +1,28 @@
-import { Message } from '../shared/models/message.model';
+
+import { Thread } from './../shared/models/thread.model';
 import { Participant } from '../shared/models/participant.model';
-import { Thread } from '../shared/models/thread.model';
+import { Message } from './../shared/models/message.model';
 
 export const dbParticipants: {[key: number]: Participant} = {
     1: {
         id: 1,
-        name: 'Sladja'
+        name: 'Alice'
     },
     2: {
         id: 2,
-        name: 'Stefan'
+        name: 'Bob'
     },
     3: {
         id: 3,
-        name: 'Jovan'
+        name: 'Chuck'
     },
     4: {
         id: 4,
-        name: 'Kiza'
+        name: 'David'
     },
     5: {
         id: 5,
-        name: 'Majaa'
+        name: 'Erin'
     }
 };
 
@@ -58,7 +59,7 @@ export const dbThreads: {[key: number]: Thread} = {
 };
 
 
-export const dbMessages: {[key: number]: Message} = {
+export const dbMessages: {[key: number ]: Message} = {
 
     1: {
         id: 1,
