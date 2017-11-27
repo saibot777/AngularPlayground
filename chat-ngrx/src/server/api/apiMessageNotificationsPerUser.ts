@@ -10,10 +10,10 @@ export function apiMessageNotificationsPerUser(app: Application) {
 
     app.route('/api/notifications/messages').post((req, res) => {
 
-        const participantId = req.headers['userid'];
+        const participantId = Math.floor(Number(req.headers['userid']));
 
         if (!participantId) {
-            res.status(200).json({payload:[]});
+            res.status(200).json({payload: []});
             return;
         }
 

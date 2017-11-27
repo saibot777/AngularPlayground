@@ -19,7 +19,7 @@ export function apiSaveNewMessage(app: Application) {
         const payload = req.body;
 
         const threadId = parseInt(req.params.id),
-            participantId = parseInt(req.headers['userid']);
+            participantId = Math.floor(Number((req.headers['userid'])));
 
         const message: Message = {
             id: messageIdCounter++,

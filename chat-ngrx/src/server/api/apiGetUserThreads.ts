@@ -6,11 +6,11 @@ import {findDbThreadsPerUser} from "../persistence/findDbThreadsPerUser";
 import * as _ from 'lodash';
 import {dbMessages, dbParticipants} from "../db-data";
 
-export function apiGetUserThreads(app:Application) {
+export function apiGetUserThreads(app: Application) {
 
     app.route('/api/threads').get((req: Request, res: Response) => {
 
-        const participantId = parseInt(req.headers['userid']);
+        const participantId = Math.floor(Number(req.headers['userid']));
 
         const threadsPerUser = findDbThreadsPerUser(participantId);
 
@@ -19,7 +19,7 @@ export function apiGetUserThreads(app:Application) {
 
         threadsPerUser.forEach(thread => {
 
-            const threadMessages: Message[] = _.filter(dbMessages, (message:any) => message.threadId == thread.id);
+            const threadMessages: Message[] = _.filter(dbMessages, (message: any) => message.threadId === thread.id);
 
             messages = messages.concat(threadMessages);
 
