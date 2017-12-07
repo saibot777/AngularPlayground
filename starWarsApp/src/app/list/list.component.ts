@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -7,10 +7,15 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ListComponent implements OnInit {
   @Input() characters;
+  @Output() sideAssigned = new EventEmitter<{name: string, side: string}>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSideAssigned(charInfo) {
+    this.sideAssigned.emit(charInfo);
   }
 
 }
