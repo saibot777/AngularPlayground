@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {StarWarsService} from '../star-wars.service';
 
 @Component({
   selector: 'app-tabs',
@@ -6,13 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tabs.component.css']
 })
 export class TabsComponent implements OnInit {
-  characters = [
-    { name: 'Luke Skywalker', side: '' },
-    { name: 'Darth Vader', side: '' }
-  ];
+  characters = [];
   chosenList = 'all';
 
-  constructor() { }
+  constructor(private swService: StarWarsService) { }
 
   ngOnInit() {
   }
@@ -22,12 +20,8 @@ export class TabsComponent implements OnInit {
   }
 
   getCharacters() {
-    if(this.chosenList === 'all') {
-      return this.characters.slice();
-    }
-    return this.characters.filter((char) => {
-      return char.side === this.chosenList;
-    });
+    this.characters  = this.swService.getCharacters(this.chosenList);
+    return this.characters;
   }
 
   onSideChosen(charInfo) {
