@@ -13,9 +13,14 @@ import { HeaderComponent } from './header/header.component';
 import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-  { path: '', component: TabsComponent },
+  { path: 'characters', component: TabsComponent,
+      children: [
+        { path: '', redirectTo: 'all', pathMatch: 'full' },
+        { path: ':side', component: ListComponent }
+      ]
+  },
   { path: 'new-character', component: CharacterFormComponent },
-  { path: '**', redirectTo: '/' }
+  { path: '**', redirectTo: '/characters' }
 ];
 
 @NgModule({

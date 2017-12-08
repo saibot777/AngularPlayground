@@ -1,16 +1,16 @@
 <div>
   <ul class="nav nav-tabs">
-    <li [ngClass]="{active: chosenList === 'all'}">
-      <a class="pointer" (click)="onChoose('all')">All</a>
+    <li>
+      <a routerLink="/characters/all" routerLinkActive="active" class="pointer">All</a>
     </li>
-    <li [ngClass]="{active: chosenList === 'light'}">
-      <a class="pointer" (click)="onChoose('light')">Light</a>
+    <li>
+      <a routerLink="/characters/light" routerLinkActive="active" class="pointer">Light</a>
     </li>
-    <li [ngClass]="{active: chosenList === 'dark'}">
-      <a class="pointer" (click)="onChoose('dark')">Dark</a>
+    <li>
+      <a routerLink="/characters/dark" routerLinkActive="active" class="pointer">Dark</a>
     </li>
   </ul>
-  <app-list [characters]="getCharacters()" (sideAssigned)="onSideChosen($event)"></app-list>
+  <router-outlet></router-outlet>
 </div>
 
 
