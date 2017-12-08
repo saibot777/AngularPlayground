@@ -9,6 +9,7 @@ import {StarWarsService} from '../star-wars.service';
 })
 export class ListComponent implements OnInit {
   characters = [];
+  loadedSide = 'all';
 
   constructor(public route: ActivatedRoute, private swService: StarWarsService) { }
 
@@ -16,8 +17,14 @@ export class ListComponent implements OnInit {
     this.route.params.subscribe(
       (params) => {
         this.characters = this.swService.getCharacters(params.side)
+        this.loadedSide = params.side
       }
     );
+    this.swService.charactersChanged.subscribe(
+      () => {
+        this.characters = this.swService.getCharacters(this.loadedSide);
+      }
+    )
   }
 
 }

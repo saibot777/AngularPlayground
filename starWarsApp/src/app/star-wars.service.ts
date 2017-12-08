@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class StarWarsService {
@@ -6,6 +7,8 @@ export class StarWarsService {
     { name: 'Luke Skywalker', side: '' },
     { name: 'Darth Vader', side: '' }
   ];
+
+  public charactersChanged = new Subject<void>();
 
   getCharacters(chosenList) {
     if (chosenList === 'all') {
@@ -21,13 +24,14 @@ export class StarWarsService {
       return char.name === charInfo.name;
     })
     this.characters[pos].side = charInfo.side;
+    this.charactersChanged.next();
   }
 
   addCharacter(name, side) {
     const pos = this.characters.findIndex((char) => {
       return char.name === name;
     });
-    if(pos !== -1) {
+    if (pos !== -1) {
        return;
     }
     const newChar = {name: name, side: side}
