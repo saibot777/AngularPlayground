@@ -9,7 +9,13 @@ import { ItemComponent } from './item/item.component';
 import {StarWarsService} from './star-wars.service';
 import { CharacterFormComponent } from './character-form/character-form.component';
 import {FormsModule} from '@angular/forms';
+import { HeaderComponent } from './header/header.component';
+import {RouterModule, Routes} from '@angular/router';
 
+const routes: Routes = [
+  { path: '', component: TabsComponent },
+  { path: 'new-character', component: CharacterFormComponent }
+];
 
 @NgModule({
   declarations: [
@@ -17,11 +23,13 @@ import {FormsModule} from '@angular/forms';
     TabsComponent,
     ListComponent,
     ItemComponent,
-    CharacterFormComponent
+    CharacterFormComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [StarWarsService],
   bootstrap: [AppComponent]
