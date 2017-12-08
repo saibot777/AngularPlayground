@@ -7,6 +7,8 @@ import { TabsComponent } from './tabs/tabs.component';
 import { ListComponent } from './list/list.component';
 import { ItemComponent } from './item/item.component';
 import {StarWarsService} from './star-wars.service';
+import { CharacterFormComponent } from './character-form/character-form.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -14,10 +16,12 @@ import {StarWarsService} from './star-wars.service';
     AppComponent,
     TabsComponent,
     ListComponent,
-    ItemComponent
+    ItemComponent,
+    CharacterFormComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [StarWarsService],
   bootstrap: [AppComponent]
