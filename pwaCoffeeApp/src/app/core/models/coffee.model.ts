@@ -1,4 +1,7 @@
-class Coffee {
+import {PlaceLocation} from './place-location.model';
+import {TastingRating} from './tasting-rating.model';
+
+export class Coffee {
 
   type: string;
   rating: number;

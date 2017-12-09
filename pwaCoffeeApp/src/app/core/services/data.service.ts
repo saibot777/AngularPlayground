@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {Coffee} from '../models/coffee.model';
+import {PlaceLocation} from '../models/place-location.model';
 
 @Injectable()
 export class DataService {
