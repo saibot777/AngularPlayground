@@ -11,6 +11,7 @@ import { CharacterFormComponent } from './character-form/character-form.componen
 import {FormsModule} from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import {RouterModule, Routes} from '@angular/router';
+import {HttpModule} from '@angular/http';
 
 const routes: Routes = [
   { path: 'characters', component: TabsComponent,
@@ -35,6 +36,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     RouterModule.forRoot(routes)
   ],
   providers: [StarWarsService],

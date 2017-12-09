@@ -13,10 +13,10 @@ export class ListComponent implements OnInit, OnDestroy{
   loadedSide = 'all';
   public subscription: Subscription;
 
-  constructor(public route: ActivatedRoute, private swService: StarWarsService) { }
+  constructor(public activatedRoute: ActivatedRoute, private swService: StarWarsService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
+    this.activatedRoute.params.subscribe(
       (params) => {
         this.characters = this.swService.getCharacters(params.side);
         this.loadedSide = params.side;
@@ -26,7 +26,7 @@ export class ListComponent implements OnInit, OnDestroy{
       () => {
         this.characters = this.swService.getCharacters(this.loadedSide);
       }
-    )
+    );
   }
 
   ngOnDestroy() {
