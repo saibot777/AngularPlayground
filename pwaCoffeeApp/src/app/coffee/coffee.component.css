@@ -1,0 +1,12 @@
+mat-card {
+  margin-top: 20px;
+}
+mat-input-container, mat-select {
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 100%;
+}
+
+mat-card-title {
+  font-size: larger;
+}

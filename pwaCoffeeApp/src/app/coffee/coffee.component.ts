@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription} from 'rxjs/Subscription';
 import {Coffee} from '../core/models/coffee.model';
 import {GeolocationService} from '../core/services/geolocation.service';
+import {TastingRating} from '../core/models/tasting-rating.model';
 
 @Component({
   selector: 'app-coffee',
@@ -36,7 +37,15 @@ export class CoffeeComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  public tastingRatingChanged(checked: boolean) {
+    if (checked) {
+      this.coffee.tastingRating = new TastingRating();
+    } else {
+      this.coffee.tastingRating =  null;
+    }
+  }
+
+    ngOnDestroy() {
     this.routingSubscription.unsubscribe();
   }
 
