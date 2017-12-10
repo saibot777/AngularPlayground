@@ -1,0 +1,6 @@
+.mat-toolbar, .mat-toolbar h1 {
+  color: white;
+}
+.mat-toolbar, .mat-toolbar h1:hover {
+  color: #ff4081;
+}
