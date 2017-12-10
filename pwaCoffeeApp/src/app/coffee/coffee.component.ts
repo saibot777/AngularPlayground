@@ -4,6 +4,7 @@ import { Subscription} from 'rxjs/Subscription';
 import {Coffee} from '../core/models/coffee.model';
 import {GeolocationService} from '../core/services/geolocation.service';
 import {TastingRating} from '../core/models/tasting-rating.model';
+import {DataService} from '../core/services/data.service';
 
 @Component({
   selector: 'app-coffee',
@@ -20,7 +21,7 @@ export class CoffeeComponent implements OnInit, OnDestroy {
     "Frappe"
   ];
 
-  constructor(private route: ActivatedRoute, private geoService: GeolocationService) { }
+  constructor(private route: ActivatedRoute, private dataService: DataService, private geoService: GeolocationService) { }
 
   ngOnInit() {
     this.coffee = new Coffee();
@@ -35,6 +36,14 @@ export class CoffeeComponent implements OnInit, OnDestroy {
         this.coffee.location.longitude = location.longitude;
       }
     });
+  }
+
+  public save() {
+    // this.dataService.save();
+  }
+
+  public cancel() {
+
   }
 
   public tastingRatingChanged(checked: boolean) {
