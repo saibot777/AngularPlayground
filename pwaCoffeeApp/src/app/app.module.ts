@@ -17,6 +17,7 @@ import { GeolocationService } from './core/services/geolocation.service';
 import { AppComponent } from './app.component';
 import { CoffeeComponent } from './coffee/coffee.component';
 import { ListComponent } from './list/list.component';
+import {HttpModule} from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ListComponent } from './list/list.component';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpModule,
     RouterModule.forRoot(routes),
     MaterialModule,
     CoreModule

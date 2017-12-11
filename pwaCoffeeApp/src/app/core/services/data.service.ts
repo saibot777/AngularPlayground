@@ -1,22 +1,33 @@
 import { Injectable } from '@angular/core';
 import {Coffee} from '../models/coffee.model';
 import {PlaceLocation} from '../models/place-location.model';
+import {Http} from '@angular/http';
 
 @Injectable()
 export class DataService {
+  public endpoint = 'http://localhost:3000';
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   public getList(callback) {
-    const list = [
-      new Coffee("Double Expresso", "Sunny Cafe", new PlaceLocation("123 Marker St", "San Francisco")),
-      new Coffee("Caramel Americano", "Star Cafe", new PlaceLocation("Gran Via 34", "Madrid")),
-    ];
-    callback(list);
+    this.http.get(`${this.endpoint}/coffees`)
+      .subscribe(response => {
+        callback(response.json());
+      });
   }
 
   public save(coffee, callback) {
-    callback(true);
+    if (coffee._id) {
+      this.http.put(`${this.endpoint}/coffees/${coffee._id}`, coffee)
+        .subscribe(response => {
+          callback(true);
+        });
+    }else {
+      this.http.post(`${this.endpoint}/coffees`, coffee)
+        .subscribe(response => {
+          callback(true);
+        });
+    }
   }
 
 }
