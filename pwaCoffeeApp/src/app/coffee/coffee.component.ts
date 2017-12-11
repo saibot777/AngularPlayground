@@ -14,6 +14,7 @@ import {DataService} from '../core/services/data.service';
 export class CoffeeComponent implements OnInit, OnDestroy {
   routingSubscription: Subscription;
   coffee: Coffee;
+  tastingEnabled = false;
   types = [
     "Espresso",
     "Americano",
@@ -31,7 +32,14 @@ export class CoffeeComponent implements OnInit, OnDestroy {
     this.coffee = new Coffee();
     this.routingSubscription =
       this.route.params.subscribe(params => {
-        console.log(params["id"]);
+        if (params["id"]) {
+          this.dataService.get(params["id"], response => {
+            this.coffee = response;
+            if (this.coffee.tastingRating) {
+              this.tastingEnabled = true;
+            }
+          });
+        }
       });
 
     this.geoService.requestLocation(location => {

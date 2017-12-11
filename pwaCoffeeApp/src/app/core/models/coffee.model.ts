@@ -3,6 +3,7 @@ import {TastingRating} from './tasting-rating.model';
 
 export class Coffee {
 
+  _id: string;
   type: string;
   rating: number;
   notes: string;

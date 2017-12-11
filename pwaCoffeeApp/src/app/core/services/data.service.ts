@@ -9,6 +9,13 @@ export class DataService {
 
   constructor(private http: Http) { }
 
+  public get(coffeeId: string, callback) {
+    this.http.get(`${this.endpoint}/coffees/${coffeeId}`)
+      .subscribe(response => {
+        callback(response.json());
+      });
+  }
+
   public getList(callback) {
     this.http.get(`${this.endpoint}/coffees`)
       .subscribe(response => {
@@ -23,7 +30,7 @@ export class DataService {
           callback(true);
         });
     }else {
-      this.http.post(`${this.endpoint}/coffees`, coffee)
+      this.http.post(`${this.endpoint}/coffees  `, coffee)
         .subscribe(response => {
           callback(true);
         });
