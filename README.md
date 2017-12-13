@@ -7,9 +7,6 @@
 # PwaCoffeeApp
 ## progressive web app tech investigation featuring angular 5
 
-# FullStackMsgApp
-## node/express back, angular front, practising latest update for 5 version
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.3.
 
 ## Development server for all apps in front
