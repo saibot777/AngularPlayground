@@ -1,0 +1,7 @@
+{
+  "name": "Frenzie Coffee App",
+  "start_url": "/",
+  "orientation": "landscape",
+  "scope": "/",
+  "display": "standalone"
+}
