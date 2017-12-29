@@ -9,7 +9,3 @@ export const INITIAL_STATE: IAppState = {
   todos: [],
   lastUpdate: null
 };
-
-export function rootReducer(state, action) {
-  return state;
-}

@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import {NgRedux, NgReduxModule} from '@angular-redux/store';
 
 import { AppComponent } from './app.component';
-import {IAppState, INITIAL_STATE, rootReducer} from './store';
+import {IAppState, INITIAL_STATE} from './store';
+import {rootReducer} from './core/store/reducer';
 
 
 @NgModule({
