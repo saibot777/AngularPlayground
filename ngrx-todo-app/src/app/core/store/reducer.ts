@@ -1,4 +1,5 @@
 import * as actions from './actions';
+import {IAppState} from '../../store';
 
 export const addTodo = (state, action) => {
   action.todo.id = state.todos.length + 1;
@@ -9,13 +10,13 @@ export const addTodo = (state, action) => {
 };
 
 export const toggleTodo = (state, action) => {
-  let todo = state.todos.find(t => t.id === action.id);
-  let index = state.todos.indexOf(todo);
+  var todo = state.todos.find(t => t.id === action.id);
+  var index = state.todos.indexOf(todo);
   return Object.assign({}, state, {
     todos: [
       ...state.todos.slice(0, index),
       Object.assign({}, todo, {isCompleted: !todo.isCompleted}),
-      ...state.todos.slice(index + 1)
+      ...state.todos.slice(index+1)
     ],
     lastUpdate: new Date()
   });
@@ -35,7 +36,7 @@ export const removeAllTodos = (state, action) => {
   })
 };
 
-export function rootReducer(state, action) {
+export function rootReducer(state: IAppState, action): IAppState {
   switch (action.type) {
     case actions.ADD_TODO: return addTodo(state, action);
     case actions.TOGGLE_TODO: return toggleTodo(state, action);
