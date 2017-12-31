@@ -7,6 +7,9 @@
 # PwaCoffeeApp
 ## progressive web app tech investigation featuring angular 5
 
+# todoApp
+## ngrx angular app, practising ngrx
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.3.
 
 ## Development server for all apps in front
