@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import * as actions from './store/actions/actions';
+import {NgRedux} from '@angular-redux/store';
+import {IInital_State} from './store/models/initialState';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +13,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class AppComponent {
   todoForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private ngRedux: NgRedux<IInital_State>) {
     this.initTodoForm();
   }
 
@@ -20,6 +26,10 @@ export class AppComponent {
       'complete': false,
       'created': [new Date()]
     })
+  }
+
+  addTodo () {
+    this.ngRedux.dispatch({type: actions.CREATE_TODOS, payload: this.todoForm.value})
   }
 
 }

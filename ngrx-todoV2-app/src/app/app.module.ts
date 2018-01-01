@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import {NgRedux, DevToolsExtension, NgReduxModule} from '@angular-redux/store';
-import {combine, IInitalState, INITIAL_STATE} from './store/models/initialState';
+import {combine, IInital_State, INITIAL_STATE} from './store/models/initialState';
+import {HttpModule} from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import {combine, IInitalState, INITIAL_STATE} from './store/models/initialState'
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     ReactiveFormsModule,
     NgReduxModule
   ],
@@ -20,7 +22,7 @@ import {combine, IInitalState, INITIAL_STATE} from './store/models/initialState'
 export class AppModule {
   constructor(
     private devTools: DevToolsExtension,
-    private ngRedux: NgRedux<IInitalState>
+    private ngRedux: NgRedux<IInital_State>
   ) {
       let enhancers = [devTools.enhancer()];
       ngRedux.configureStore(combine, INITIAL_STATE, [], enhancers)
