@@ -1,4 +1,5 @@
-import {ITodoState} from '../todo-state.model';
+import {ITodoState} from '../models/todo-state.model';
+import * as actions from '../actions/actions';
 
 export const TODO_STATE: ITodoState = {
   todos: [],

@@ -1,4 +1,4 @@
-import {ITodo} from '../core/models/todo.model';
+import {ITodo} from '../../core/models/todo.model';
 
 export interface ITodoState {
   todos: Array<ITodo>,
