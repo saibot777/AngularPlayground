@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  todoForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.initTodoForm();
+  }
+
+  initTodoForm () {
+    return this.todoForm = this.fb.group({
+      'name': [null, Validators.compose([Validators.required])],
+      'description': [null, Validators.compose([Validators.required])],
+      'complete': false,
+      'created': [new Date()]
+    })
+  }
+
 }

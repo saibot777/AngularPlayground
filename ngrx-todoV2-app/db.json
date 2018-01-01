@@ -1,0 +1,8 @@
+{
+  "todos": [{
+    "name": "Awesome!",
+    "description": "Lesson NGRX",
+    "complete": true,
+    "created": "some date object..."
+  }]
+}
