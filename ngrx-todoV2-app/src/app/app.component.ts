@@ -13,7 +13,7 @@ import {ITodo} from './core/models/todo.model';
 })
 export class AppComponent implements OnInit{
   todoForm: FormGroup;
-  public todo_state: Observable<ITodo[]>
+  public todo_state: Observable<ITodo[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     this.ngRedux.dispatch({type: actions.GET_TODOS});
-    this.todo_state = this.ngRedux.select(x => x.todos)
+    this.todo_state = this.ngRedux.select(x => x.todos.todos)
   }
 
   initTodoForm () {
