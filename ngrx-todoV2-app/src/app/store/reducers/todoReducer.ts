@@ -8,9 +8,8 @@ export const TODO_STATE: ITodoState = {
   error: null
 };
 
-export const createTodos = (state: ITodoState, action) => {
+export const createTodos = (state: ITodoState, action: any) => {
   return tassign(state, {
-    todos: action.payload,
     loading: true,
     error: null
   })
@@ -27,6 +26,24 @@ export const createTodosSuccess = (state: ITodoState, action: any) => {
 export const todosError = (state: ITodoState, action: any) => {
   return tassign(state, {
     error: action.payload
+  })
+};
+
+export const completeTodo = (state:ITodoState, action: any) => {
+  return tassign(state, {
+    loading: true
+  })
+};
+
+export const deleteTodo = (state: ITodoState, action: any) => {
+  return tassign(state, {
+    loading: true
+  })
+};
+
+export const deleteTodoSuccess = (state: ITodoState, action: any) => {
+  return tassign(state, {
+    loading: false
   })
 };
 
