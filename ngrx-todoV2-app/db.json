@@ -1,8 +1,18 @@
 {
-  "todos": [{
-    "name": "Awesome!",
-    "description": "Lesson NGRX",
-    "complete": true,
-    "created": "some date object..."
-  }]
+  "todos": [
+    {
+      "id": 1,
+      "name": "Awesome!",
+      "description": "Lesson NGRX",
+      "complete": true,
+      "created": "some date object..."
+    },
+    {
+      "name": "dasdas",
+      "description": "dasdas",
+      "complete": false,
+      "created": "2018-01-02T09:45:48.974Z",
+      "id": 2
+    }
+  ]
 }
