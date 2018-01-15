@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FlexboxComponent } from './flexbox.component';
+import { SidenavComponent } from './sidenav.component';
 
-describe('FlexboxComponent', () => {
-  let component: FlexboxComponent;
-  let fixture: ComponentFixture<FlexboxComponent>;
+describe('SidenavComponent', () => {
+  let component: SidenavComponent;
+  let fixture: ComponentFixture<SidenavComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlexboxComponent ]
+      declarations: [ SidenavComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FlexboxComponent);
+    fixture = TestBed.createComponent(SidenavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
