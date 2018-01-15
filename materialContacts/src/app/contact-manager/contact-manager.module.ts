@@ -9,6 +9,8 @@ import {MaterialModule} from "../shared/material/material.module";
 import {MainContentComponent} from "./main-content/main-content.component";
 import {SidenavComponent} from "../shared/components/sidenav/sidenav.component";
 import {ToolbarComponent} from "../shared/components/toolbar/toolbar.component";
+import {UserService} from "../core/services/user.service";
+import {HttpClientModule} from "@angular/common/http";
 
 const routes: Routes = [
   {
@@ -25,11 +27,12 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     FlexLayoutModule,
+    HttpClientModule,
     RouterModule.forChild(routes),
     MaterialModule,
   ],
   providers: [
-
+    UserService
   ],
   declarations: [
     ContactManagerComponent,
