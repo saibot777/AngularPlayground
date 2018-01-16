@@ -10,7 +10,6 @@
       true,
       "check-space"
     ],
-    "curly": true,
     "deprecation": {
       "severity": "warn"
     },
@@ -86,10 +85,6 @@
     "semicolon": [
       true,
       "always"
-    ],
-    "triple-equals": [
-      true,
-      "allow-null-check"
     ],
     "typedef-whitespace": [
       true,
