@@ -15,6 +15,12 @@ export class NotesComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
   ngOnInit() {
     this.dataSource = new MatTableDataSource<Note>(this.notes);
   }
