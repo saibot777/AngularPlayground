@@ -11,6 +11,7 @@ import {SidenavComponent} from "../shared/components/sidenav/sidenav.component";
 import {ToolbarComponent} from "../shared/components/toolbar/toolbar.component";
 import {UserService} from "../core/services/user.service";
 import {HttpClientModule} from "@angular/common/http";
+import { NotesComponent } from './notes/notes.component';
 
 const routes: Routes = [
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
     ContactManagerComponent,
     MainContentComponent,
     ToolbarComponent,
-    SidenavComponent
+    SidenavComponent,
+    NotesComponent
   ]
 })
 export class ContactManagerModule { }
