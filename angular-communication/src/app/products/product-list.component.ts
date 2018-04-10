@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 import { IProduct } from './product';
 import { ProductService } from './product.service';
 import {ProductParameterService} from "./product-parameter.service";
+import {CriteriaComponent} from "../shared/criteria/criteria.component";
 
 @Component({
     templateUrl: './product-list.component.html',
@@ -17,28 +18,31 @@ export class ProductListComponent implements OnInit {
 
     filteredProducts: IProduct[];
     products: IProduct[];
+    @ViewChild(CriteriaComponent) filterComponent: CriteriaComponent;
 
     get showImage(): boolean {
-      return this.productParatemerService.showImage;
+      return this.productParameterService.showImage;
     }
     set showImage(value: boolean) {
-      this.productParatemerService.showImage = value;
+      this.productParameterService.showImage = value;
     }
 
     constructor(private productService: ProductService,
-                private productParatemerService: ProductParameterService) { }
+                private productParameterService: ProductParameterService) { }
 
     ngOnInit(): void {
         this.productService.getProducts().subscribe(
             (products: IProduct[]) => {
                 this.products = products;
-                this.performFilter();
+                this.filterComponent.listFilter =
+                  this.productParameterService.filterBy;
             },
             (error: any) => this.errorMessage = <any>error
         );
     }
 
     onValueChange(value: string): void {
+      this.productParameterService.filterBy = value;
       this.performFilter(value);
     }
 
