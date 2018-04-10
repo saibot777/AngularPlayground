@@ -17,7 +17,7 @@ export class ProductEditComponent implements OnInit {
     product: IProduct;
 
     get isDirty(): boolean {
-        return this.editForm.dirty ? true : false;
+        return !!this.editForm.dirty;
     }
 
     constructor(private productService: ProductService,
