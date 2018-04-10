@@ -16,6 +16,16 @@ export class ProductListComponent implements OnInit {
     imageMargin: number = 2;
     errorMessage: string;
 
+    private _listFilter: string;
+
+    get listFilter(): string {
+      return this._listFilter;
+    }
+    set listFilter(value: string) {
+      this._listFilter = value;
+      this.performFilter(this.listFilter);
+    }
+
     filteredProducts: IProduct[];
     products: IProduct[];
 
@@ -30,6 +40,8 @@ export class ProductListComponent implements OnInit {
             (error: any) => this.errorMessage = <any>error
         );
     }
+
+
 
     toggleImage(): void {
         this.showImage = !this.showImage;
