@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import { IProduct } from './product';
 import { ProductService } from './product.service';
+import {ProductParameterService} from "./product-parameter.service";
 
 @Component({
     templateUrl: './product-list.component.html',
@@ -9,7 +10,6 @@ import { ProductService } from './product.service';
 })
 export class ProductListComponent implements OnInit {
     pageTitle: string = 'Product List';
-    showImage: boolean;
 
     imageWidth: number = 50;
     imageMargin: number = 2;
@@ -18,7 +18,15 @@ export class ProductListComponent implements OnInit {
     filteredProducts: IProduct[];
     products: IProduct[];
 
-    constructor(private productService: ProductService) { }
+    get showImage(): boolean {
+      return this.productParatemerService.showImage;
+    }
+    set showImage(value: boolean) {
+      this.productParatemerService.showImage = value;
+    }
+
+    constructor(private productService: ProductService,
+                private productParatemerService: ProductParameterService) { }
 
     ngOnInit(): void {
         this.productService.getProducts().subscribe(
