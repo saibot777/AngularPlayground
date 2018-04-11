@@ -32,6 +32,12 @@ export class ProductService {
         if (id === 0) {
             return of(this.initializeProduct());
         }
+        if (this.products) {
+          const foundItem = this.products.find(item => item.id === id);
+          if (foundItem) {
+            return of(foundItem);
+          }
+        }
         const url = `${this.productsUrl}/${id}`;
         return this.http.get<IProduct>(url)
                         .pipe(
