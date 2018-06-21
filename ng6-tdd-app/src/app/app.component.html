@@ -1,6 +1,13 @@
 <div class="container">
+
   <div class="row">
-    <app-book [book]='book'></app-book>
+    <div class="col-12">
+      {{cart | json}}
+    </div>
+  </div>
+
+  <div class="row">
+    <app-book [book]='book' (addToCart)="addToCart($event)"></app-book>
   </div>
 </div>
 

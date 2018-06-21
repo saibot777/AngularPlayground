@@ -7,6 +7,7 @@ import { BookModel } from "./models/book.model";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public cart: BookModel[] = [];
   public book: BookModel = new BookModel(
     'https://cdn.wccftech.com/wp-content/uploads/2015/05/Witcher-3-415-2060x1288.jpg',
     'Blood of the Elves',
@@ -14,4 +15,8 @@ export class AppComponent {
     15,
     0
   );
+
+  addToCart(book: BookModel) {
+    this.cart.push(book);
+  }
 }
