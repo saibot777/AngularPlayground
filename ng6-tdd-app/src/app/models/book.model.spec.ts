@@ -24,7 +24,7 @@ describe('BookModel', () => {
       return storage[key] || null;
     });
 
-    spyOn(window.localStorage, 'removeItem').and.callFake((key: string): void => {
+    spyOn(window.localStorage, 'removeItem').and.callFake((key: string): any => {
       delete storage[key];
     });
 
@@ -58,7 +58,7 @@ describe('BookModel', () => {
     this.book.destroy();
     const bookFromStorage: BookModel = BookModel.find(this.book.title);
     expect(bookFromStorage).not.toBeTruthy();
-    expect(bookFromStorage).toEqual(null);
+    expect(bookFromStorage).toEqual(null || undefined);
   });
 
   it('is localeStorage working', () => {
