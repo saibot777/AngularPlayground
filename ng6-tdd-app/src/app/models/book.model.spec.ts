@@ -1,4 +1,4 @@
-import { BookInterface, BookModel } from './book.model';
+import { BookModel } from './book.model';
 import * as faker from 'faker';
 
 describe('BookModel', () => {
@@ -41,12 +41,36 @@ describe('BookModel', () => {
     localStorage.clear();
   });
 
+  it('is the save method working', () => {
+    this.book.save();
+    const bookFromStorage: BookModel = BookModel.find(this.book.title);
+    expect(this.book).toEqual(bookFromStorage);
+  });
+
+  it('are the find and save methods working', () => {
+    this.book.save();
+    const bookFromStorage: BookModel = BookModel.find(this.book.title);
+    expect(this.book).toEqual(bookFromStorage);
+  });
+
+  it('is the destroy method working', () => {
+    this.book.save();
+    this.book.destroy();
+    const bookFromStorage: BookModel = BookModel.find(this.book.title);
+    expect(bookFromStorage).not.toBeTruthy();
+    expect(bookFromStorage).toEqual(null);
+  });
+
+  it('is localeStorage working', () => {
+    expect(localStorage.setItem('key', 'value')).toBe('value');
+    expect(localStorage.getItem('key')).toBe('value');
+  });
+
   it('has a valid model', () => {
-    const book = new BookModel(image, title, description, price, upvotes);
-    expect(book.image).toEqual(image);
-    expect(book.title).toEqual(title);
-    expect(book.description).toEqual(description);
-    expect(book.price).toEqual(price);
-    expect(book.upvotes).toEqual(upvotes);
+    expect(this.book.image).toEqual(image);
+    expect(this.book.title).toEqual(title);
+    expect(this.book.description).toEqual(description);
+    expect(this.book.price).toEqual(price);
+    expect(this.book.upvotes).toEqual(upvotes);
   });
 });
