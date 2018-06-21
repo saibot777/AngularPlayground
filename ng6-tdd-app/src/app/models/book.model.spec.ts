@@ -1,6 +1,5 @@
-import { BookInterface, BookModel } from "./book.model";
+import { BookInterface, BookModel } from './book.model';
 import * as faker from 'faker';
-import {afterEach} from "selenium-webdriver/testing";
 
 describe('BookModel', () => {
   let image: string;
@@ -13,7 +12,7 @@ describe('BookModel', () => {
 
   beforeEach(() => {
     image = faker.image.image();
-    title = faker.lorem.words();
+    title = faker.lorem.sentence();
     description = faker.lorem.sentence();
     price = faker.commerce.price();
     upvotes = faker.random.number();
@@ -21,7 +20,7 @@ describe('BookModel', () => {
 
     let storage = {};
 
-    spyOn(window.localStorage, 'getItem').and.callFake((key: string): String => {
+    spyOn(window.localStorage, 'getItem').and.callFake((key: string): string => {
       return storage[key] || null;
     });
 
@@ -29,7 +28,7 @@ describe('BookModel', () => {
       delete storage[key];
     });
 
-    spyOn(window.localStorage, 'setItem').and.callFake((key: string, value: string): String => {
+    spyOn(window.localStorage, 'setItem').and.callFake((key: string, value: string): string => {
       return storage[key] = <string>value;
     });
 
@@ -44,12 +43,10 @@ describe('BookModel', () => {
 
   it('has a valid model', () => {
     const book = new BookModel(image, title, description, price, upvotes);
-
     expect(book.image).toEqual(image);
     expect(book.title).toEqual(title);
     expect(book.description).toEqual(description);
     expect(book.price).toEqual(price);
     expect(book.upvotes).toEqual(upvotes);
   });
-
 });

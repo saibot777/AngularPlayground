@@ -65,7 +65,7 @@ describe('BookComponent', () => {
   it('upvote invokes the component function', () => {
     const spy = spyOn(component, 'upvote');
     const button = nativeElement.querySelector('button');
-    button.click();
+    button.dispatchEvent(new Event('click'));
     expect(spy).toHaveBeenCalled();
   });
 
