@@ -49,4 +49,24 @@ describe('BookComponent', () => {
     const price = nativeElement.querySelector('.book-price').innerHTML;
     expect(price).toEqual('$12,344.55');
   });
+
+  xit('pending', () => {
+    const any: any = jasmine.any(Number);
+  });
+
+  it('should set correct number of upvotes', () => {
+    const votes = component.votesCounter();
+    expect(component.votesCounter()).toEqual(votes);
+    expect(component.votesCounter()).toBeGreaterThan(votes - 1);
+    expect(component.votesCounter()).not.toEqual(votes + 1);
+    expect(component.votesCounter()).toBeLessThan(votes + 1);
+  });
+
+  it('upvote invokes the component function', () => {
+    const spy = spyOn(component, 'upvote');
+    const button = nativeElement.querySelector('button');
+    button.click();
+    expect(spy).toHaveBeenCalled();
+  });
+
 });
