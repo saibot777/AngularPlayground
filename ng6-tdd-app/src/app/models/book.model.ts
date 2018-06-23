@@ -15,6 +15,22 @@ export class BookModel implements BookInterface {
     public upvotes: number = 0
   ) { }
 
+  public static query() {
+    const books: Array<BookModel> = JSON.parse(localStorage.getItem('books') || '[]');
+    const bookModels: BookModel[] = [];
+    for (const book of books) {
+      bookModels.push(new BookModel(
+        book.image,
+        book.title,
+        book.description,
+        book.price,
+        book.upvotes,
+      ));
+    }
+
+    return bookModels;
+  }
+
   public static find(title: string) {
     const books: Array<BookModel> = JSON.parse(localStorage.getItem('books') || '[]');
     for (const book of books) {
