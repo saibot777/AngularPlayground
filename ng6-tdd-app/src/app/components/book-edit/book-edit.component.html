@@ -1,3 +1,38 @@
-<p>
-  book-edit works!
-</p>
+<div class="row">
+  <div class="col-12">
+    <h1>Edit a book {{book.title}}</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-4">
+    <a [routerLink]="" (click)='activeForm="reactive"'>Reactive Form</a>
+  </div>
+</div>
+
+<form
+  (ngSubmit)="submitReactiveForm"
+  novalidate *ngIf='activeForm === "reactive"'
+  [formGroup]="bookEditForm">
+  <div class="row mt-3">
+    <div class="col-6">
+      Reactive Form
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12 form-group">
+      <label for="title">Title</label>
+      <input
+        formControlName="title"
+        name="title"
+        type="text"
+        [ngClass]='{ "is-invalid": bookEditForm.controls["title"].touched &&
+          bookEditForm.controls["title"].errors}'
+        class="form-control">
+      <div class="invalid-feedback">
+        Please provide valid title!
+      </div>
+    </div>
+  </div>
+</form>
