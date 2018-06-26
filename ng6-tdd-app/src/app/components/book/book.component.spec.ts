@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as faker from 'faker';
 import { BookComponent } from './book.component';
-import { BookModel } from "../../models/book.model";
+import { BookModel } from '../../models/book.model';
 
 describe('BookComponent', () => {
   let component: BookComponent;
@@ -13,7 +13,7 @@ describe('BookComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BookComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,14 +21,29 @@ describe('BookComponent', () => {
     component = fixture.componentInstance;
     book = new BookModel(
       faker.image.image(),
-      faker.lorem.sentence(),
+      faker.lorem.words().join(),
       faker.lorem.paragraph(),
-      12344.55,
-      0,
+      1234.55,
+      0
     );
     component.book = book;
     fixture.detectChanges();
     nativeElement = fixture.nativeElement;
+  });
+
+  it('should emit addToCart event', (done) => {
+    component.addToCart.subscribe(e => {
+      expect(e).toEqual(component.book);
+      done();
+    });
+    component.sendToCart();
+  });
+
+  it('should call to a function sendToCart when clicked', () => {
+    let spy = spyOn(component, 'sendToCart');
+    let button = nativeElement.querySelector('button.send-to-cart');
+    button.dispatchEvent(new Event('click'));
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should create', () => {
@@ -36,26 +51,31 @@ describe('BookComponent', () => {
   });
 
   it('should show the book image', () => {
-    const image = nativeElement.querySelector('.book-image').getAttribute('src');
+    let image = nativeElement.querySelector('.book-image').getAttribute('src');
     expect(image).toEqual(book.image);
   });
 
   it('should show the book title', () => {
-    const title = nativeElement.querySelector('.book-title').innerHTML;
+    let title = nativeElement.querySelector('.book-title').innerHTML;
     expect(title).toEqual(book.title);
   });
 
   it('should show the book description', () => {
-    const price = nativeElement.querySelector('.book-price').innerHTML;
-    expect(price).toEqual('$12,344.55');
+    let description = nativeElement.querySelector('.book-description').innerHTML;
+    expect(description).toEqual(book.description);
+  });
+
+  it('should show the book price', () => {
+    let price = nativeElement.querySelector('.book-price').innerHTML;
+    expect(price).toEqual('$1,234.55');
   });
 
   xit('pending', () => {
-    const any: any = jasmine.any(Number);
+    let any:any = jasmine.any(Number);
   });
 
   it('should set correct number of upvotes', () => {
-    const votes = component.votesCounter();
+    let votes = component.votesCounter();
     expect(component.votesCounter()).toEqual(votes);
     expect(component.votesCounter()).toBeGreaterThan(votes - 1);
     expect(component.votesCounter()).not.toEqual(votes + 1);
@@ -63,10 +83,9 @@ describe('BookComponent', () => {
   });
 
   it('upvote invokes the component function', () => {
-    const spy = spyOn(component, 'upvote');
-    const button = nativeElement.querySelector('button');
+    let spy = spyOn(component, 'upvote');
+    let button = nativeElement.querySelector('button.upvote');
     button.dispatchEvent(new Event('click'));
     expect(spy).toHaveBeenCalled();
   });
-
 });

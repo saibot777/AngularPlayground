@@ -1,15 +1,14 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {BookModel} from "../../models/book.model";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { BookModel } from '../../models/book.model';
 
 @Component({
-  selector: 'app-book',
+  selector: 'book',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.css']
 })
 export class BookComponent implements OnInit {
   @Input() book: BookModel;
   @Output() addToCart: EventEmitter<BookModel> = new EventEmitter();
-
   constructor() { }
 
   ngOnInit() {
@@ -26,5 +25,4 @@ export class BookComponent implements OnInit {
   upvote() {
     return this.book.upvotes++;
   }
-
 }

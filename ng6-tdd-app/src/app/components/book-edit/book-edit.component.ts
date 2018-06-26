@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {BookModel} from "../../models/book.model";
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup,
+  Validators } from '@angular/forms';
+
+import { BookModel } from '../../models/book.model';
 
 @Component({
-  selector: 'app-book-edit',
+  selector: 'book-edit',
   templateUrl: './book-edit.component.html',
   styleUrls: ['./book-edit.component.css']
 })
@@ -13,19 +15,16 @@ export class BookEditComponent implements OnInit {
   book: BookModel;
   activeForm = 'reactive';
 
-  constructor(
-    private route: ActivatedRoute,
-    fb: FormBuilder
-  ) {
+  constructor(fb: FormBuilder, private route: ActivatedRoute) {
     this.bookEditForm = fb.group({
       title: ['', Validators.required],
       image: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', Validators.required]
+      description: [''],
+      price: ['']
     });
     route.params.subscribe(res => {
       this.book = BookModel.find(res['title']);
-      if (this.book === null) {
+      if (this.book == null) {
         this.book = new BookModel('', '', '', 0);
       }
     });
@@ -37,7 +36,7 @@ export class BookEditComponent implements OnInit {
       bookData.image,
       bookData.title,
       bookData.description,
-      bookData.price,
+      bookData.price
     );
     this.book.save();
   }
