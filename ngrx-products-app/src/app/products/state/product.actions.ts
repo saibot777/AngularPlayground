@@ -1,10 +1,10 @@
 import {Action} from '@ngrx/store';
-import {Product} from '../products/product';
+import {Product} from '../product';
 
 export enum ProductActionTypes {
   ToggleProductCode = '[Product] Toggle Product Code',
   SetCurrentProduct = '[Product] Set Current Product',
-  CleatCurrentProduct = '[Product] Clear Current Product',
+  ClearCurrentProduct = '[Product] Clear Current Product',
   InitializeCurrentProduct = '[Product] Initialize Current Product'
 }
 
@@ -21,7 +21,7 @@ export class SetCurrentProduct implements Action {
 }
 
 export class ClearCurrentProduct implements Action {
-  readonly type = ProductActionTypes.CleatCurrentProduct;
+  readonly type = ProductActionTypes.ClearCurrentProduct;
 }
 
 export class InitializeCurrentProduct implements Action {
