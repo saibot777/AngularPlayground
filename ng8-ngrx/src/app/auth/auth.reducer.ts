@@ -1,11 +1,10 @@
-import { Action } from '@ngrx/store';
-import {User} from '../model/user.model';
-import {AuthActions, AuthActionTypes} from './auth.actions';
-
+import { Action } from "@ngrx/store";
+import { User } from "../model/user.model";
+import { AuthActions, AuthActionTypes } from "./auth.actions";
 
 export interface AuthState {
-  loggedIn: boolean,
-  user: User
+  loggedIn: boolean;
+  user: User;
 }
 
 export const initialAuthState: AuthState = {
@@ -13,10 +12,11 @@ export const initialAuthState: AuthState = {
   user: undefined
 };
 
-export function authReducer(state = initialAuthState,
-                            action: AuthActions): AuthState {
+export function authReducer(
+  state = initialAuthState,
+  action: AuthActions
+): AuthState {
   switch (action.type) {
-
     case AuthActionTypes.LoginAction:
       return {
         loggedIn: true,
@@ -24,10 +24,10 @@ export function authReducer(state = initialAuthState,
       };
 
     case AuthActionTypes.LogoutAction:
-        return {
-          loggedIn: false,
-          user: undefined
-        };
+      return {
+        loggedIn: false,
+        user: undefined
+      };
 
     default:
       return state;
