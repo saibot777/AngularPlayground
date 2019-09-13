@@ -1,81 +1,80 @@
-
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import {Course} from '../model/course';
-import {CoursesService} from '../services/courses.service';
-import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/operators';
-import {merge, fromEvent, Observable} from 'rxjs';
-import {LessonsDataSource} from '../services/lessons.datasource';
-import {AppState} from '../../reducers';
-import {select, Store} from '@ngrx/store';
-import {PageQuery} from '../course.actions';
-import {selectLessonsLoading} from '../course.selectors';
-
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit
+} from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { Course } from "../model/course";
+import { Observable, of } from "rxjs";
+import { Lesson } from "../model/lesson";
+import {
+  concatMap,
+  delay,
+  filter,
+  first,
+  map,
+  shareReplay,
+  tap,
+  withLatestFrom
+} from "rxjs/operators";
+import { CoursesHttpService } from "../services/courses-http.service";
+import { CourseEntityService } from "../services/course-entity.service";
+import { LessonEntityService } from "../services/lesson-entity.service";
 
 @Component({
-    // tslint:disable-next-line: component-selector
-    selector: 'course',
-    templateUrl: './course.component.html',
-    styleUrls: ['./course.component.css']
+  // tslint:disable-next-line: component-selector
+  selector: "course",
+  templateUrl: "./course.component.html",
+  styleUrls: ["./course.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseComponent implements OnInit, AfterViewInit {
+export class CourseComponent implements OnInit {
+  course$: Observable<Course>;
 
-    course: Course;
+  loading$: Observable<boolean>;
 
-    dataSource: LessonsDataSource;
+  lessons$: Observable<Lesson[]>;
 
-    displayedColumns = ['seqNo', 'description', 'duration'];
+  displayedColumns = ["seqNo", "description", "duration"];
 
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  nextPage = 0;
 
-    loading$: Observable<boolean>;
+  constructor(
+    private coursesService: CourseEntityService,
+    private lessonsService: LessonEntityService,
+    private route: ActivatedRoute
+  ) {}
 
+  ngOnInit() {
+    const courseUrl = this.route.snapshot.paramMap.get("courseUrl");
 
-    constructor(private route: ActivatedRoute, private store: Store<AppState>) {
+    this.course$ = this.coursesService.entities$.pipe(
+      map(courses => courses.find(course => course.url == courseUrl))
+    );
 
-    }
+    this.lessons$ = this.lessonsService.entities$.pipe(
+      withLatestFrom(this.course$),
+      tap(([lessons, course]) => {
+        if (this.nextPage == 0) {
+          this.loadLessonsPage(course);
+        }
+      }),
+      map(([lessons, course]) =>
+        lessons.filter(lesson => lesson.courseId == course.id)
+      )
+    );
 
-    ngOnInit() {
+    this.loading$ = this.lessonsService.loading$.pipe(delay(0));
+  }
 
-        this.course = this.route.snapshot.data['course'];
+  loadLessonsPage(course: Course) {
+    this.lessonsService.getWithQuery({
+      courseId: course.id.toString(),
+      pageNumber: this.nextPage.toString(),
+      pageSize: "3"
+    });
 
-        this.loading$ = this.store.pipe(select(selectLessonsLoading));
-
-        this.dataSource = new LessonsDataSource(this.store);
-
-        const initialPage: PageQuery = {
-          pageIndex: 0,
-          pageSize: 3
-        };
-
-        this.dataSource.loadLessons(this.course.id, initialPage);
-
-    }
-
-    ngAfterViewInit() {
-
-        this.paginator.page
-          .pipe(
-            tap(() => this.loadLessonsPage())
-          )
-          .subscribe();
-
-
-    }
-
-    loadLessonsPage() {
-
-      const newPage: PageQuery = {
-        pageIndex: this.paginator.pageIndex,
-        pageSize: this.paginator.pageSize
-      };
-
-      this.dataSource.loadLessons(this.course.id, newPage);
-
-    }
-
-
+    this.nextPage += 1;
+  }
 }

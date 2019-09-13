@@ -1,31 +1,60 @@
-import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation
+} from "@angular/core";
 import { Course } from "../model/course";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { CourseDialogComponent } from "../course-dialog/course-dialog.component";
+import { EditCourseDialogComponent } from "../edit-course-dialog/edit-course-dialog.component";
+import { defaultDialogConfig } from "../shared/default-dialog-config";
+import { CourseEntityService } from "../services/course-entity.service";
 
 @Component({
   // tslint:disable-next-line: component-selector
   selector: "courses-card-list",
   templateUrl: "./courses-card-list.component.html",
-  styleUrls: ["./courses-card-list.component.css"]
+  styleUrls: ["./courses-card-list.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesCardListComponent implements OnInit {
   @Input()
   courses: Course[];
 
-  constructor(private dialog: MatDialog) {}
+  @Output()
+  courseChanged = new EventEmitter();
+
+  constructor(
+    private dialog: MatDialog,
+    private courseService: CourseEntityService
+  ) {}
 
   ngOnInit() {}
 
   editCourse(course: Course) {
-    const dialogConfig = new MatDialogConfig();
+    const dialogConfig = defaultDialogConfig();
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "400px";
+    dialogConfig.data = {
+      dialogTitle: "Edit Course",
+      course,
+      mode: "update"
+    };
 
-    dialogConfig.data = course;
+    this.dialog
+      .open(EditCourseDialogComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(() => this.courseChanged.emit());
+  }
 
-    const dialogRef = this.dialog.open(CourseDialogComponent, dialogConfig);
+  onDeleteCourse(course: Course) {
+    this.courseService
+      .delete(course)
+      .subscribe(
+        () => console.log("Delete completed"),
+        err => console.log("Deleted failed", err)
+      );
   }
 }

@@ -16,15 +16,13 @@ import { AuthModule } from "./auth/auth.module";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
-import {
-  RouterStateSerializer,
-  StoreRouterConnectingModule
-} from "@ngrx/router-store";
+import { RouterState, StoreRouterConnectingModule } from "@ngrx/router-store";
 
 import { EffectsModule } from "@ngrx/effects";
-import { reducers, metaReducers } from "./reducers";
+import { MatProgressSpinnerModule } from "@angular/material";
+import { metaReducers, reducers } from "./reducers";
 import { AuthGuard } from "./auth/auth.guard";
-import { CustomSerializer } from "./shared/utils";
+import { EntityDataModule } from "@ngrx/data";
 
 const routes: Routes = [
   {
@@ -49,15 +47,30 @@ const routes: Routes = [
     MatMenuModule,
     MatIconModule,
     MatSidenavModule,
+    MatProgressSpinnerModule,
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictActionSerializability: true,
+        strictStateSerializability: true
+      }
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    }),
     EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot({ stateKey: "router" })
+    EntityDataModule.forRoot({}),
+    StoreRouterConnectingModule.forRoot({
+      stateKey: "router",
+      routerState: RouterState.Minimal
+    })
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

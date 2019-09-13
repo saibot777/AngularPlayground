@@ -1,40 +1,57 @@
-import {Component, OnInit} from '@angular/core';
-import {Course} from '../model/course';
-import {Observable} from 'rxjs';
-import {filter, map, tap, withLatestFrom} from 'rxjs/operators';
-import {CoursesService} from '../services/courses.service';
-import {AppState} from '../../reducers';
-import {select, Store} from '@ngrx/store';
-import {selectAdvancedCourses, selectAllCourses, selectBeginnerCourses, selectPromoTotal} from '../course.selectors';
-import {AllCoursesRequested} from '../course.actions';
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { Course } from "../model/course";
+import { Observable } from "rxjs";
+import { defaultDialogConfig } from "../shared/default-dialog-config";
+import { EditCourseDialogComponent } from "../edit-course-dialog/edit-course-dialog.component";
+import { MatDialog } from "@angular/material";
+import { map } from "rxjs/operators";
+import { CourseEntityService } from "../services/course-entity.service";
+
 @Component({
-    // tslint:disable-next-line: component-selector
-    selector: 'home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+  // tslint:disable-next-line: component-selector
+  selector: "home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
+  promoTotal$: Observable<number>;
 
-    promoTotal$: Observable<number>;
+  beginnerCourses$: Observable<Course[]>;
 
-    beginnerCourses$: Observable<Course[]>;
+  advancedCourses$: Observable<Course[]>;
 
-    advancedCourses$: Observable<Course[]>;
+  constructor(
+    private dialog: MatDialog,
+    private coursesService: CourseEntityService
+  ) {}
 
-    constructor(private store: Store<AppState>) {
+  ngOnInit() {
+    this.reload();
+  }
 
-    }
+  reload() {
+    this.beginnerCourses$ = this.coursesService.entities$.pipe(
+      map(courses => courses.filter(course => course.category == "BEGINNER"))
+    );
 
-    ngOnInit() {
+    this.advancedCourses$ = this.coursesService.entities$.pipe(
+      map(courses => courses.filter(course => course.category == "ADVANCED"))
+    );
 
-        this.store.dispatch(new AllCoursesRequested());
+    this.promoTotal$ = this.coursesService.entities$.pipe(
+      map(courses => courses.filter(course => course.promo).length)
+    );
+  }
 
-        this.beginnerCourses$ = this.store.pipe(select(selectBeginnerCourses));
+  onAddCourse() {
+    const dialogConfig = defaultDialogConfig();
 
-        this.advancedCourses$ = this.store.pipe(select(selectAdvancedCourses));
+    dialogConfig.data = {
+      dialogTitle: "Create Course",
+      mode: "create"
+    };
 
-        this.promoTotal$ = this.store.pipe(select(selectPromoTotal));
-
-    }
-
+    this.dialog.open(EditCourseDialogComponent, dialogConfig);
+  }
 }
